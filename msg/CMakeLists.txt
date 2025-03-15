@@ -240,6 +240,7 @@ set(msg_files
 	versioned/GotoSetpoint.msg
 	versioned/HomePosition.msg
 	versioned/ManualControlSetpoint.msg
+	versioned/MiscControls.msg
 	versioned/ModeCompleted.msg
 	versioned/RegisterExtComponentReply.msg
 	versioned/RegisterExtComponentRequest.msg

@@ -71,6 +71,7 @@
 #include <uORB/topics/actuator_motors.h>
 #include <uORB/topics/actuator_servos.h>
 #include <uORB/topics/actuator_servos_trim.h>
+#include <uORB/topics/misc_controls.h>
 #include <uORB/topics/control_allocator_status.h>
 #include <uORB/topics/parameter_update.h>
 #include <uORB/topics/vehicle_control_mode.h>
@@ -143,6 +144,8 @@ private:
 	int _num_control_allocation{0};
 	hrt_abstime _last_effectiveness_update{0};
 
+	float _misc_controls[misc_controls_s::NUM_CONTROLS] {0};
+
 	enum class EffectivenessSource {
 		NONE = -1,
 		MULTIROTOR = 0,
@@ -172,6 +175,7 @@ private:
 
 	uint8_t _control_allocation_selection_indexes[NUM_ACTUATORS * ActuatorEffectiveness::MAX_NUM_MATRICES] {};
 	int _num_actuators[(int)ActuatorType::COUNT] {};
+	int _num_misc_controls;
 
 	// Inputs
 	uORB::SubscriptionCallbackWorkItem _vehicle_torque_setpoint_sub{this, ORB_ID(vehicle_torque_setpoint)};  /**< vehicle torque setpoint subscription */
@@ -183,9 +187,10 @@ private:
 	// Outputs
 	uORB::PublicationMulti<control_allocator_status_s> _control_allocator_status_pub[2] {ORB_ID(control_allocator_status), ORB_ID(control_allocator_status)};
 
-	uORB::Publication<actuator_motors_s>	_actuator_motors_pub{ORB_ID(actuator_motors)};
-	uORB::Publication<actuator_servos_s>	_actuator_servos_pub{ORB_ID(actuator_servos)};
-	uORB::Publication<actuator_servos_trim_s>	_actuator_servos_trim_pub{ORB_ID(actuator_servos_trim)};
+	uORB::Publication<actuator_motors_s> _actuator_motors_pub{ORB_ID(actuator_motors)};
+	uORB::Publication<actuator_servos_s> _actuator_servos_pub{ORB_ID(actuator_servos)};
+	uORB::Publication<actuator_servos_trim_s> _actuator_servos_trim_pub{ORB_ID(actuator_servos_trim)};
+	uORB::Publication<misc_controls_s> _misc_controls_pub{ORB_ID(misc_controls)};
 
 	uORB::SubscriptionInterval _parameter_update_sub{ORB_ID(parameter_update), 1_s};
 

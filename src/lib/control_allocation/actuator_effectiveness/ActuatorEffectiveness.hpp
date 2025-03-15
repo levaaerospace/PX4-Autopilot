@@ -45,6 +45,7 @@
 
 #include <matrix/matrix/math.hpp>
 #include <uORB/topics/control_allocator_status.h>
+#include <uORB/topics/misc_controls.h>
 
 enum class AllocationMethod {
 	NONE = -1,
@@ -118,10 +119,13 @@ public:
 
 		ActuatorVector linearization_point[MAX_NUM_MATRICES];
 
+		float misc_controls[misc_controls_s::NUM_CONTROLS];
+
 		int selected_matrix;
 
 		uint8_t matrix_selection_indexes[NUM_ACTUATORS * MAX_NUM_MATRICES];
 		int num_actuators[(int)ActuatorType::COUNT];
+		int num_misc_controls;
 	};
 
 	/**

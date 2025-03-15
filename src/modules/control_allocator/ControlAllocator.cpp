@@ -60,6 +60,7 @@ ControlAllocator::ControlAllocator() :
 	_actuator_motors_pub.advertise();
 	_actuator_servos_pub.advertise();
 	_actuator_servos_trim_pub.advertise();
+	_misc_controls_pub.advertise();
 
 	for (int i = 0; i < MAX_NUM_MOTORS; ++i) {
 		char buffer[17];
@@ -489,6 +490,9 @@ ControlAllocator::update_effectiveness_matrix_if_needed(EffectivenessUpdateReaso
 		memcpy(_control_allocation_selection_indexes, config.matrix_selection_indexes,
 		       sizeof(_control_allocation_selection_indexes));
 
+		_num_misc_controls = config.num_misc_controls;
+		memcpy(_misc_controls, config.misc_controls, sizeof(_misc_controls));
+
 		// Get the minimum and maximum depending on type and configuration
 		ActuatorEffectiveness::ActuatorVector minimum[ActuatorEffectiveness::MAX_NUM_MATRICES];
 		ActuatorEffectiveness::ActuatorVector maximum[ActuatorEffectiveness::MAX_NUM_MATRICES];
@@ -673,6 +677,10 @@ ControlAllocator::publish_actuator_controls()
 	actuator_servos.timestamp = actuator_motors.timestamp;
 	actuator_servos.timestamp_sample = _timestamp_sample;
 
+	misc_controls_s misc_controls;
+	misc_controls.timestamp = actuator_motors.timestamp;
+	misc_controls.timestamp_sample = _timestamp_sample;
+
 	actuator_motors.reversible_flags = _param_r_rev.get();
 
 	int actuator_idx = 0;
@@ -719,6 +727,18 @@ ControlAllocator::publish_actuator_controls()
 		}
 
 		_actuator_servos_pub.publish(actuator_servos);
+	}
+
+	// misc
+	if (_num_misc_controls > 0) {
+		int misc_idx = 0;
+		for (misc_idx = 0; misc_idx < _num_misc_controls && misc_idx < misc_controls_s::NUM_CONTROLS; misc_idx++) {
+			misc_controls.control[misc_idx] = _misc_controls[misc_idx];
+		}
+		for (int i = misc_idx; i < misc_controls_s::NUM_CONTROLS; i++) {
+			misc_controls.control[i] = NAN;
+		}
+		_misc_controls_pub.publish(misc_controls);
 	}
 }
 

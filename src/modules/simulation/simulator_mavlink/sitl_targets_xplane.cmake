@@ -42,6 +42,9 @@ add_xplane_target(xplane_alia250 5020 5020_xplane_alia250)
 # X-Plane QTailsitter (Tailsitter VTOL) - Quantix Style
 add_xplane_target(xplane_qtailsitter 5021 5021_xplane_qtailsitter)
 
+# X-Plane Robinson R22
+add_xplane_target(xplane_robinson 5030 5030_xplane_robinson)
+
 # Instructions for adding more X-Plane configurations:
 # To add additional airframe configurations for X-Plane, follow these steps:
 #   1. Ensure the airframe file is present in the PX4 ROMFS directory under init.d-posix/airframes.

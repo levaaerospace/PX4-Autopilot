@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# @name Generic Helicopter (Tail ESC)
+#
+# @type Helicopter
+# @class Copter
+#
+# @board px4_fmu-v2 exclude
+# @board bitcraze_crazyflie exclude
+#
+
+. ${R}etc/init.d/rc.heli_defaults
+
+param set-default MAV_TYPE 4
+
+# Disable PID gains for initial setup. These should be enabled after setting the FF gain.
+# P is expected to be lower than FF.
+# param set-default MC_ROLLRATE_P 0
+# param set-default MC_ROLLRATE_I 0
+# param set-default MC_ROLLRATE_D 0
+# param set-default MC_ROLLRATE_FF 0.1
+# param set-default MC_PITCHRATE_P 0
+# param set-default MC_PITCHRATE_I 0
+# param set-default MC_PITCHRATE_D 0
+# param set-default MC_PITCHRATE_FF 0.1
+
+# param set-default PWM_MAIN_FUNC1 101   # Motor 1
+param set-default PWM_MAIN_FUNC1 10001   # Motor 1
+param set-default PWM_MAIN_FUNC2 201   # Pitch
+param set-default PWM_MAIN_FUNC3 202   # Pitch
+param set-default PWM_MAIN_FUNC4 203   # Pitch
+# param set-default PWM_MAIN_FUNC5 10001 # xplane misc 
+# param set-default PWM_MAIN_FUNC6 10002 # xplane misc 
+# param set-default PWM_MAIN_FUNC7 10003 # xplane misc 
+
+# ---- Simulator Sensor Configuration ----
+# Enabling simulated sensors for integration with X-Plane
+param set-default SENS_EN_GPSSIM 1
+param set-default SENS_EN_BAROSIM 1
+param set-default SENS_EN_MAGSIM 1
+param set-default SENS_EN_ARSPDSIM 1
+
+param set-default CA_AIRFRAME 10
+
+param set-default CA_ROTOR_COUNT 1
+param set-default CA_ROTOR0_PX 0.0
+param set-default CA_ROTOR0_PY 0.0
+param set-default CA_ROTOR0_KM 0.05
+
+param set-default CA_SV_CS_COUNT 0
+# param set-default CA_SV_CS0_TYPE 1     # Left aileron
+# param set-default CA_SV_CS0_TRQ_R -0.5
+
+# --- Landing and RTL Parameters ---
+param set-default FW_LND_FLALT 5
+param set-default RTL_LOITER_RAD 1000
+param set-default FW_LND_FL_PMAX 35
+param set-default FW_TKO_AIRSPD 32
+param set-default FW_TKO_PITCH_MIN 20
+param set-default FW_T_CLMB_MAX 6
+param set-default FW_WING_HEIGHT 2.5
+param set-default FW_WING_SPAN 11
+param set-default MIS_DIST_1WP 5000
+param set-default MIS_TAKEOFF_ALT 100
+param set-default MIS_TKO_LAND_REQ 0
+param set-default RTL_MIN_DIST 50

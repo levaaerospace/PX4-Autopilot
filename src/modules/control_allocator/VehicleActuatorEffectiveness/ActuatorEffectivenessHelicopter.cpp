@@ -140,6 +140,11 @@ bool ActuatorEffectivenessHelicopter::getEffectivenessMatrix(Configuration &conf
 		configuration.trim[configuration.selected_matrix](i) = _geometry.swash_plate_servos[i].trim;
 	}
 
+	configuration.num_misc_controls = 3;
+	configuration.misc_controls[0] = 0.5;
+	configuration.misc_controls[1] = 0.1;
+	configuration.misc_controls[2] = 0.9;
+
 	return true;
 }
 
